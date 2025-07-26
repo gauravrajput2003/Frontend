@@ -12,11 +12,13 @@ const App = () => {
     <Provider store={appStore}>
     <BrowserRouter>
       <Routes>
+        {/* Login route - accessible without authentication */}
+        <Route path="/login" element={<Login />} />
+        
+        {/* All other routes go through Body component which handles authentication */}
         <Route path="/" element={<Body />}>
           <Route index element={<Feed />} />
-          <Route path="login" element={<Login />} />
           <Route path="profile" element={<Profile />} />
-         
         </Route>
       </Routes> 
     </BrowserRouter>

@@ -1,5 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Profile from './Profile';
 
 const Navbar = () => {
   const user=useSelector((store)=>store.user)
@@ -7,7 +9,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-300 text-base-content shadow-md">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">👦DevNexus</a>
+        <Link to="/" className="btn btn-ghost text-xl">👦DevNexus</Link>
       </div>
       <div className="flex gap-2">
         {user && (
@@ -32,9 +34,9 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-200 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow-lg border border-base-300"
           >
             <li>
-              <a className="justify-between">
+              <Link to="/profile" className="justify-between">
                 Profile <span className="badge">New</span>
-              </a>
+              </Link>
             </li>
             <li><a>Settings</a></li>
             <li><a>Logout</a></li>
