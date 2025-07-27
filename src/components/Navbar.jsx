@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Profile from './Profile';
 
 const Navbar = () => {
   const user=useSelector((store)=>store.user)
