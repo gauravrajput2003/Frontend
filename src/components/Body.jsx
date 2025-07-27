@@ -23,7 +23,7 @@ try{    const res=await axios.get(BASE_URL+"/profile/view",{
         navigate("/login");
       }
     
-    console.log(err);  
+    // console.log(err);  
     }
   }
   useEffect(()=>{

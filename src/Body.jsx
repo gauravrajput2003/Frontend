@@ -24,7 +24,7 @@ dispatch(addUser(res.data));
  Navigate("/login");
     }
    
-    console.log(err);
+    // console.log(err);
   }
   };
   useEffect(()=>{
