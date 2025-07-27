@@ -9,9 +9,17 @@ const Login = () => {
       const navigate=useNavigate();
   const[email,setemail]=useState("sk@gmail.com");
   const[password,setpassword]=useState("Animal@@80");
+  const [Error,setError]=useState();
   const dispatch=useDispatch();
+    const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
   const handleLogin=async()=>{
-
+if (!validateEmail(email)) {
+      setError("email is incorrect");
+      return;
+    }
  try{
   const res=await axios.post(BASE_URL+"/Login",{
   email,
@@ -27,6 +35,7 @@ navigate("/")
 }
 
  catch(err){
+setError(err?.response?.data || "something went wrong");
   console.log(err);
  }
   };
@@ -65,6 +74,7 @@ navigate("/")
           </label>
           
           {/* Login Button */}
+         <p className='text-red-500 text-2xl'>{Error}</p>
           <div className="card-actions justify-center mt-6">
             <button className="btn btn-primary w-full" onClick={handleLogin}>Login</button>
           </div>
