@@ -32,7 +32,7 @@ dispatch(addConnection(res.data.data));
         {connection.map((connection, index) => {
             const {firstName,lastName,photoUrl,age,gender,about}=connection;
             return(
-                <div key={index} className='card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
+                <div key={index} className='card bg-base-300 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
                     <figure className="px-6 pt-6">
                         <img 
                             alt='photo' 

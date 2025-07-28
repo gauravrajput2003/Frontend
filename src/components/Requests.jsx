@@ -1,12 +1,25 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../utils/Constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRequests } from '../utils/requestSlice';
+import { addRequests, removeRequest } from '../utils/requestSlice';
 
 const Requests = () => {
   const request=useSelector((store)=>store.requests);
   const dispatch=useDispatch();
+  const [showbtn,setshowbtn]=useState(true);
+  //revire request
+  const reviewRequest=async(status,_id)=>{
+    try{
+const res=await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{
+withCredentials:true
+});
+dispatch(removeRequest(_id));
+    }
+    catch(err){
+console.log(err.message);
+    }
+  }
   const fetchRequest=async()=>{
     try{
 const res=await axios.get(BASE_URL+"/user/requests/received",{
@@ -23,7 +36,7 @@ dispatch(addRequests(res.data.data))
     fetchRequest();
   },[]);
   if(!request)return;
-  if(request.length===0)return <h1>No Request Found!</h1>
+  if(request.length===0)return <h1 className='flex justify-center my-20 text-3xl text-red-500 font-bold'>No Request Found!</h1>
    return (
     <div className='container mx-auto px-4 py-8'>
         <h1 className='text-bold text-3xl text-center mb-8 text-primary'>Your Requests</h1>
@@ -44,8 +57,10 @@ dispatch(addRequests(res.data.data))
                         {age && gender && <p className="text-base-content/70 text-sm">{age+", "+gender}</p>}
                         <p className="text-base-content/80 text-sm line-clamp-3">{about}</p>
                         <div className="card-actions justify-center mt-4 p-4 w-full">
-                            <button className="btn btn-primary btn-md w-24">Accept</button>
-                            <button className="btn btn-secondary btn-md w-24">Reject</button>
+                            <button 
+                            onClick={()=>reviewRequest("accepted",request._id)}
+                            className="btn btn-primary btn-md w-24">Accept</button>
+                            <button onClick={()=>reviewRequest("rejected",request._id)} className="btn btn-secondary btn-md w-24">Reject</button>
                         </div>
                     </div>
                 </div>
