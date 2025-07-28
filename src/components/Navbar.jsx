@@ -15,14 +15,14 @@ const Navbar = () => {
             withCredentials:true,
       });
       dispatch(removeUser());
-      Navigate("/login");
+      navigate("/login");
     }
     catch(err){
       // console.log(err);
     }
   }
   return (
-    <div className="navbar bg-base-300 text-base-content shadow-md">
+    <div className="navbar bg-base-300 text-base-content shadow-md ">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">👦DevNexus</Link>
       </div>
@@ -53,7 +53,9 @@ const Navbar = () => {
                 Profile <span className="badge">New</span>
               </Link>
             </li>
-            <li><a>Settings</a></li>
+            <li><Link to="/connections">connections</Link></li>
+            <li><a onClick={LogoutUser}>Logout</a></li>
+            <li><Link to="/requests">Requests</Link></li>
             <li><a onClick={LogoutUser}>Logout</a></li>
           </ul>
         </div>

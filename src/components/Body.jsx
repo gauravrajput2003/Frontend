@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
@@ -8,35 +8,52 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 
 const Body = () => {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
-  const userdata=useSelector((store)=>store.user);
-  const fetchUser=async()=>{
-    if(userdata)return;
-try{    const res=await axios.get(BASE_URL+"/profile/view",{
-      withCredentials:true,
-    });
-  dispatch(addUser(res.data));
-  }
-    catch(err){
-      if(err.status===401){
-        navigate("/login");
-      }
-    
-    // console.log(err);  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((store) => store.user);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get(BASE_URL + "/profile/view", {
+        withCredentials: true,
+      });
+      dispatch(addUser(res.data));
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      console.log("Not authenticated, redirecting to login");
+      navigate("/login"); // This should redirect to login
     }
   }
-  useEffect(()=>{
-    if(!userdata){
-    fetchUser();}
-  },[]);
+
+  useEffect(() => {
+    if (!user) {
+      fetchUser();
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div>
+        <Navbar />
+        <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
+          <div className="loading loading-spinner loading-lg"></div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Navbar />
       <Outlet />
-      <Footer/>
+      <Footer />
     </div>
-  ) 
+  )
 }
 
 export default Body

@@ -119,12 +119,12 @@ setshowToast(false);
                 />
                 {photo && (
                   <div className="mt-2">
-                    <img 
+                    {/* <img 
                       src={photo} 
                       alt="Preview" 
                       className="w-20 h-20 rounded-full object-cover"
                       onError={(e) => e.target.style.display = 'none'}
-                    />
+                    /> */}
                   </div>
                 )}
               </div>
