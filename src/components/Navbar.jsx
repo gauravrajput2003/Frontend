@@ -22,13 +22,13 @@ const Navbar = () => {
     }
   }
   return (
-    <div className="navbar bg-base-300 text-base-content shadow-md ">
+    <div className="navbar bg-base-300 text-base-content shadow-md sticky top-0 z-50">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">👦DevNexus</Link>
       </div>
       <div className="flex gap-2">
         {user && (
-          <div className="dropdown dropdown-end mx-5 flex items-center">
+          <div className="dropdown dropdown-end dropdown-hover mx-5 flex items-center">
             <p className='px-4 text-base font-medium'>
               Welcome, {user?.firstName?.trim() || 'User'}!
             </p>
@@ -44,25 +44,36 @@ const Navbar = () => {
                 />
               </div>
             </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-200 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow-lg border border-base-300"
-          >
-            <li>
-              <Link to="/profile" className="justify-between">
-                Profile <span className="badge">New</span>
-              </Link>
-            </li>
-            <li><Link to="/connections">connections</Link></li>
-            <li><a onClick={LogoutUser}>Logout</a></li>
-            <li><Link to="/requests">Requests</Link></li>
-            <li><a onClick={LogoutUser}>Logout</a></li>
-          </ul>
-        </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[100] mt-8 w-52 p-2 shadow-xl border border-base-300"
+            >
+              <li>
+                <Link to="/profile" className="justify-between hover:bg-primary hover:text-white">
+                  Profile <span className="badge badge-primary badge-sm">New</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/connections" className="hover:bg-primary hover:text-white">
+                  Connections
+                </Link>
+              </li>
+              <li>
+                <Link to="/requests" className="hover:bg-primary hover:text-white">
+                  Requests
+                </Link>
+              </li>
+              <li>
+                <a onClick={LogoutUser} className="hover:bg-error hover:text-white">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-export default Navbar 
+export default Navbar

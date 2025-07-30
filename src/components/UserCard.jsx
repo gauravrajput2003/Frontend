@@ -1,8 +1,14 @@
+import axios from 'axios';
 import React from 'react'
+import { BASE_URL } from '../utils/Constant';
+import { useDispatch } from 'react-redux';
+import { removeUserFeed } from '../utils/feedSlice';
 
 const UserCard = ({user}) => {
-const{firstName,lastName,photoUrl,age,gender,about}=user;
-      if (!user) {
+  const dispatch = useDispatch();
+  
+  // Check if user exists BEFORE destructuring
+  if (!user) {
     console.log("User is undefined, showing loading...");
     return (
       <div className="card bg-base-100 w-96 shadow-sm">
@@ -15,23 +21,50 @@ const{firstName,lastName,photoUrl,age,gender,about}=user;
       </div>
     );
   }
+
+  // NOW it's safe to destructure user
+  const {_id, firstName, lastName, photoUrl, age, gender, about} = user;
+  
+  const handleSendRequest = async(status, userId) => {
+    try {
+      console.log("Sending request:", status, "for user:", userId);
+      const res = await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, {
+        withCredentials: true
+      });
+      console.log("Request successful:", res.data);
+      dispatch(removeUserFeed(userId));
+    }
+    catch(err) {
+      console.log("Request error:", err.response?.data || err.message);
+    }
+  }
+
   return (
     <div className="card bg-base-300 w-96 shadow-sm">
-  <figure>
-    <img
-      src={user.photoUrl}
-      alt="user" />
-  </figure>
-  <div className="card-body">
-    <h2 className="card-title">{firstName+" "+lastName}</h2>
-  {age && gender && <p>{age + "," + gender}</p>}
-    <p>{about}</p>
-    <div className="card-actions justify-end">
+      <figure>
+        <img
+          src={photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+          alt="user" 
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{firstName + " " + lastName}</h2>
+        {age && gender && <p>{age + ", " + gender}</p>}
+        <p>{about}</p>
+        <div className="card-actions justify-end">
+          <button
+            onClick={() => handleSendRequest("ignore", _id)}
+            className="btn btn-secondary">
+            Ignore
+          </button>
+          <button
+            onClick={() => handleSendRequest("interested", _id)}
+            className="btn btn-primary">
+            Interested
+          </button>
+        </div>
+      </div>
     </div>
-      <button className="btn btn-secondary  ">Igonore</button>
-      <button className="btn btn-primary">Interested</button>
-  </div>
-</div>
   )
 }
 
