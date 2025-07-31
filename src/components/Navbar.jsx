@@ -22,7 +22,7 @@ const Navbar = () => {
     }
   }
   return (
-    <div className="navbar bg-base-300 text-base-content shadow-md sticky top-0 z-50">
+    <div className="navbar bg-base-300 text-base-content shadow-md sticky top-0 z-[60]">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">👦DevNexus</Link>
       </div>
@@ -35,12 +35,18 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar hover:scale-105 transition-transform"
             >
-              <div className="w-10 rounded-full">
+              {/* Larger avatar container */}
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/50 hover:border-primary transition-colors">
                 <img
                   alt="User photo"
-                  src={user.photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                  src={user?.photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    console.log("Image failed to load:", e.target.src);
+                    e.target.src = "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
+                  }}
                 />
               </div>
             </div>

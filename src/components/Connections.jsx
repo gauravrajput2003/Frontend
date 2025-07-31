@@ -24,7 +24,7 @@ dispatch(addConnection(res.data.data));
         fetchConn();
     },[]);
     if(!connection)return;
-    if(connection.length===0)return <div className="flex justify-center items-center min-h-[400px]"><h1 className="text-2xl font-bold text-base-content/70">No connections found</h1></div>
+    if(connection.length===0)return <div className="flex justify-center items-center min-h-[400px]"><h1 className="text-red-600 text-3xl font-bold text-base-content/70">No connections found</h1></div>
   return (
     <div className='container mx-auto px-4 py-8'>
         <h1 className='text-bold text-3xl text-center mb-8 text-primary'>Your Connections</h1>
