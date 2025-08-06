@@ -18,3 +18,15 @@ If you are developing a production application, we recommend using TypeScript wi
 add origin and credotal in cors
 -whenever your makinga api call so pass axios =>{withcredediantial:true}
 -got to application and see the token
+
+
+#DEPLOYMENT
+sigunup aws
+create insatce ec2
+create key pair
+i did clone
+  ##for frontend
+then , npm i, npm run dev
+
+# deployed link of frontend
+http://51.21.131.83
