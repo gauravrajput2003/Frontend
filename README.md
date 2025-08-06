@@ -30,3 +30,12 @@ then , npm i, npm run dev
 
 # deployed link of frontend
 http://51.21.131.83
+# nginx config
+    location /api/ {
+        proxy_pass http://localhost:9931/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
