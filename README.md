@@ -39,3 +39,15 @@ http://51.21.131.83
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
+
+# steps in git bash 
+1. C:\Users\gaura\Downloads
+2. chmod 400 devTinder-gaurav.pem
+3. ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
+4. pm2 list    
+5. for edit nginx config
+  sudo nano /etc/nginx/sites-available/default    
+  after chaneg (ctrl+o for save press enter then ctrl+x)
+6. Test and restart Nginx 
+sudo nginx -t
+sudo systemctl restart nginx 

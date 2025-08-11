@@ -72,7 +72,17 @@ const UserCard = ({ user, onUserAction }) => {
     );
   }
 
-  const { _id, firstName, lastName, photoUrl, age, gender, about } = user;
+  const { _id, firstName, lastName, photoUrl, age, gender, about, skills } = user;
+
+  // Handle skills - ensure it's always an array
+  const skillsArray = React.useMemo(() => {
+    if (!skills) return [];
+    if (Array.isArray(skills)) return skills;
+    if (typeof skills === 'string') {
+      return skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+    }
+    return [];
+  }, [skills]);
 
   return (
     <AnimatePresence mode="wait">
@@ -127,10 +137,11 @@ const UserCard = ({ user, onUserAction }) => {
                   className="w-full h-72 object-cover rounded-t-3xl"
                 />
                 
-                {/* Floating tech badges */}
+                {/* Online status indicator */}
                 <div className="absolute top-4 right-4 z-20">
-                  <div className="bg-sky-500/80 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-sky-400/50">
-                    Developer
+                  <div className="bg-green-500/90 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full border border-green-400/50 font-medium shadow-lg flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
+                    Online
                   </div>
                 </div>
               </div>
@@ -157,16 +168,48 @@ const UserCard = ({ user, onUserAction }) => {
                     </div>
                   </div>
                   
-                  <p className="text-white/90 text-sm leading-relaxed mb-6 drop-shadow">
+                  <p className="text-white/90 text-sm leading-relaxed mb-4 drop-shadow">
                     {about || "No description available"}
                   </p>
+                  
+                  {/* Skills section - Enhanced Design */}
+                  {skillsArray && skillsArray.length > 0 && (
+                    <div className="mb-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-6 h-6 bg-gradient-to-r from-sky-400 to-blue-500 rounded-lg flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                          </svg>
+                        </div>
+                        <h3 className="text-white text-sm font-bold tracking-wide">
+                          Technical Skills
+                        </h3>
+                      </div>
+                      <div className="space-y-2">
+                        {skillsArray.slice(0, 3).map((skill, index) => (
+                          <div
+                            key={index}
+                            className="bg-gradient-to-r from-sky-500/20 to-blue-500/20 backdrop-blur-lg text-white text-sm px-4 py-2.5 rounded-xl border border-sky-400/30 font-medium hover:from-sky-400/30 hover:to-blue-400/30 transition-all duration-300 shadow-lg text-center truncate"
+                            title={skill} // Tooltip for full skill name
+                          >
+                            {skill.length > 20 ? skill.substring(0, 20) + '...' : skill}
+                          </div>
+                        ))}
+                        {skillsArray.length > 3 && (
+                          <div className="bg-white/10 backdrop-blur-lg text-white/80 text-sm px-4 py-2.5 rounded-xl border border-white/20 font-medium text-center">
+                            +{skillsArray.length - 3} more skills
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Enhanced action buttons */}
                   <div className="flex gap-4 justify-center">
                     <button
                       onClick={() => handleSendRequest("ignore", _id)}
                       disabled={isCardAnimating}
-                      className="flex-1 bg-gradient-to-r from-red-500/80 to-pink-500/80 hover:from-red-500 hover:to-pink-500 text-white font-semibold py-3 px-6 rounded-xl border border-red-400/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 bg-gradient-to-r from-red-500/90 to-pink-500/90 hover:from-red-500 hover:to-pink-500 text-white font-bold py-4 px-6 rounded-2xl border border-red-400/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                     >
                       <span className="flex items-center justify-center gap-2">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +222,7 @@ const UserCard = ({ user, onUserAction }) => {
                     <button
                       onClick={() => handleSendRequest("interested", _id)}
                       disabled={isCardAnimating}
-                      className="flex-1 bg-gradient-to-r from-green-500/80 to-emerald-500/80 hover:from-green-500 hover:to-emerald-500 text-white font-semibold py-3 px-6 rounded-xl border border-green-400/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 bg-gradient-to-r from-emerald-500/90 to-green-500/90 hover:from-emerald-500 hover:to-green-500 text-white font-bold py-4 px-6 rounded-2xl border border-emerald-400/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                     >
                       <span className="flex items-center justify-center gap-2">
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

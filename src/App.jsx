@@ -8,6 +8,8 @@ import appStore from './utils/appStore';
 import Feed from './components/Feed';
 import Connections from './components/Connections';
 import Requests from './components/Requests';
+import Chat from './components/Chat';
+import { SocketProvider } from './context/SocketContext';
 import Particles from "react-tsparticles";
 
 const particlesOptions = {
@@ -37,61 +39,64 @@ const particlesOptions = {
 const App = () => {
   return (
     <Provider store={appStore}>
-      <BrowserRouter>
-        <div
-          style={{
-            minHeight: "100vh",
-            width: "100vw",
-            backgroundImage: "url('/dev.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            position: "relative"
-          }}
-        >
-          {/* Enhanced overlay for better card visibility */}
+      <SocketProvider>
+        <BrowserRouter>
           <div
             style={{
-              position: "absolute",
-              inset: 0,
-              background: "rgba(0,0,0,0.65)", // Increased opacity from 0.45 to 0.65
-              zIndex: 2,
-              pointerEvents: "none"
+              minHeight: "100vh",
+              width: "100vw",
+              backgroundImage: "url('/dev.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              position: "relative"
             }}
-          />
-          
-          {/* Additional gradient overlay for depth */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(135deg, rgba(15,23,42,0.8) 0%, rgba(30,41,59,0.6) 50%, rgba(51,65,85,0.4) 100%)",
-              zIndex: 3,
-              pointerEvents: "none"
-            }}
-          />
-          
-          {/* Particles with reduced visibility */}
-          <Particles
-            id="tsparticles"
-            options={particlesOptions}
-            style={{ position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none" }}
-          />
-          
-          {/* Main content */}
-          <div className="relative z-10" style={{ position: "relative", zIndex: 5 }}>
-            <Routes>
-              <Route path="/" element={<Body />}>
-                <Route index element={<Feed />} />
-                <Route path="login" element={<Login />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="connections" element={<Connections />} />
-                <Route path="requests" element={<Requests />} />
-              </Route>
-            </Routes>
+          >
+            {/* Enhanced overlay for better card visibility */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "rgba(0,0,0,0.65)", // Increased opacity from 0.45 to 0.65
+                zIndex: 2,
+                pointerEvents: "none"
+              }}
+            />
+            
+            {/* Additional gradient overlay for depth */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(135deg, rgba(15,23,42,0.8) 0%, rgba(30,41,59,0.6) 50%, rgba(51,65,85,0.4) 100%)",
+                zIndex: 3,
+                pointerEvents: "none"
+              }}
+            />
+            
+            {/* Particles with reduced visibility */}
+            <Particles
+              id="tsparticles"
+              options={particlesOptions}
+              style={{ position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none" }}
+            />
+            
+            {/* Main content */}
+            <div className="relative z-10" style={{ position: "relative", zIndex: 5 }}>
+              <Routes>
+                <Route path="/chat/:userId" element={<Chat />} />
+                <Route path="/" element={<Body />}>
+                  <Route index element={<Feed />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="connections" element={<Connections />} />
+                  <Route path="requests" element={<Requests />} />
+                </Route>
+              </Routes>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </SocketProvider>
     </Provider>
   );
 };
