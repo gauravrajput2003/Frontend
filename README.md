@@ -41,7 +41,11 @@ http://51.21.131.83
     }
 
 # steps in git bash 
-1. C:\Users\gaura\Downloads
+1. C:\Users\gaura\ or  
+1.1  cd ~/Downloads
+cd ~/DevTinder
+
+
 2. chmod 400 devTinder-gaurav.pem
 3. ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
 4. pm2 list    
