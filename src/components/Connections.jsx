@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Connections = () => {
     const connection=useSelector((store)=>store.connection);
-    const chatHistory = useSelector((store) => store.chat.conversations);
     const dispatch=useDispatch();
     const navigate = useNavigate();
     
@@ -25,22 +24,8 @@ dispatch(addConnection(res.data.data));
         }
     }
     
-    const handleMessage = (connectionId) => {
-        navigate(`/chat/${connectionId}`);
-    };
-    
-    const getLastMessage = (userId) => {
-        const messages = chatHistory[userId];
-        if (messages && messages.length > 0) {
-            const lastMessage = messages[messages.length - 1];
-            return {
-                text: lastMessage.message.length > 30 
-                    ? lastMessage.message.substring(0, 30) + '...' 
-                    : lastMessage.message,
-                time: new Date(lastMessage.timestamp).toLocaleDateString()
-            };
-        }
-        return null;
+    const handleMessage = (_connectionId) => {
+        // Chat feature removed; no action.
     };
     
     useEffect(()=>{
@@ -54,8 +39,7 @@ dispatch(addConnection(res.data.data));
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {connection.map((connection, index) => {
             const {firstName,lastName,photoUrl,age,gender,about,skills}=connection;
-            const lastMessage = getLastMessage(connection._id);
-            const hasMessages = chatHistory[connection._id] && chatHistory[connection._id].length > 0;
+            // Chat data removed
             
             // Handle skills - ensure it's always an array
             const skillsArray = skills ? (Array.isArray(skills) ? skills : (typeof skills === 'string' ? skills.split(',').map(s => s.trim()).filter(s => s.length > 0) : [])) : [];
@@ -97,26 +81,17 @@ dispatch(addConnection(res.data.data));
                             </div>
                         )}
                         
-                        {/* Last message preview */}
-                        {lastMessage && (
-                            <div className="bg-base-200/50 rounded-lg p-2 mt-2 w-full">
-                                <p className="text-xs text-base-content/60 font-medium">Last message:</p>
-                                <p className="text-sm text-base-content/80 italic">"{lastMessage.text}"</p>
-                                <p className="text-xs text-base-content/50">{lastMessage.time}</p>
-                            </div>
-                        )}
+                        {/* Last message preview removed */}
                         
                         <div className="card-actions justify-center mt-4 space-x-2">
                             <button 
-                                className={`btn btn-sm gap-2 shadow-lg hover:shadow-xl transition-all duration-300 ${
-                                    hasMessages ? 'btn-secondary' : 'btn-primary'
-                                }`}
+                                className="btn btn-sm btn-primary gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
                                 onClick={() => handleMessage(connection._id)}
                             >
                                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
                                 </svg>
-                                {hasMessages ? 'Continue Chat' : 'Message'}
+                                Message
                             </button>
                             <button className="btn btn-outline btn-sm gap-2 hover:shadow-lg transition-all duration-300">
                                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

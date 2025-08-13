@@ -8,8 +8,6 @@ import appStore from './utils/appStore';
 import Feed from './components/Feed';
 import Connections from './components/Connections';
 import Requests from './components/Requests';
-import Chat from './components/Chat';
-import { SocketProvider } from './context/SocketContext';
 import Particles from "react-tsparticles";
 
 const particlesOptions = {
@@ -38,8 +36,7 @@ const particlesOptions = {
 
 const App = () => {
   return (
-    <Provider store={appStore}>
-      <SocketProvider>
+  <Provider store={appStore}>
         <BrowserRouter>
           <div
             style={{
@@ -84,7 +81,6 @@ const App = () => {
             {/* Main content */}
             <div className="relative z-10" style={{ position: "relative", zIndex: 5 }}>
               <Routes>
-                <Route path="/chat/:userId" element={<Chat />} />
                 <Route path="/" element={<Body />}>
                   <Route index element={<Feed />} />
                   <Route path="login" element={<Login />} />
@@ -95,8 +91,7 @@ const App = () => {
               </Routes>
             </div>
           </div>
-        </BrowserRouter>
-      </SocketProvider>
+  </BrowserRouter>
     </Provider>
   );
 };

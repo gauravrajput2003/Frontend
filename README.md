@@ -49,9 +49,9 @@ ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazona
 cd ~/DevTinder
 git pull origin main
 npm install --legacy-peer-deps
-pm2 restart devtinder backend
+pm2 restart devtinder-backend
 # if we change in Frontend follow this-
-cd ~/Frontend
+  cd ~/Frontend
 git pull origin main
 npm install --legacy-peer-deps
 npm run build

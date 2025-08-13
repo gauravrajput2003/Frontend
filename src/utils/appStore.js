@@ -3,7 +3,6 @@ import userReducer from "./userSlice";
 import feedReducer from "./feedSlice";
 import connectionReducer from "./connectionSlice"
 import requestReducer from "./requestSlice"
-import chatReducer from "./chatSlice"
 const appStore=configureStore(
     {
         reducer:{
@@ -11,7 +10,7 @@ const appStore=configureStore(
             feed:feedReducer,
             connection:connectionReducer,
             requests:requestReducer,
-            chat:chatReducer,
+            // chat removed
         }
     }
 )
