@@ -4,7 +4,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const loadChatFromStorage = () => {
   try {
     const savedChats = localStorage.getItem('devnexus_chat_history');
-    return savedChats ? JSON.parse(savedChats) : {};
+    if (savedChats) {
+      const parsedChats = JSON.parse(savedChats);
+      // Convert timestamp strings back to Date objects
+      Object.keys(parsedChats).forEach(userId => {
+        parsedChats[userId] = parsedChats[userId].map(message => ({
+          ...message,
+          timestamp: message.timestamp ? new Date(message.timestamp) : new Date()
+        }));
+      });
+      return parsedChats;
+    }
+    return {};
   } catch (error) {
     console.error('Error loading chat history:', error);
     return {};
@@ -32,7 +43,12 @@ const chatSlice = createSlice({
       if (!state.conversations[userId]) {
         state.conversations[userId] = [];
       }
-      state.conversations[userId].push(message);
+      // Ensure timestamp is a Date object
+      const messageWithTimestamp = {
+        ...message,
+        timestamp: message.timestamp instanceof Date ? message.timestamp : new Date(message.timestamp || Date.now())
+      };
+      state.conversations[userId].push(messageWithTimestamp);
       // Save to localStorage after adding message
       saveChatToStorage(state.conversations);
     },

@@ -3,3 +3,73 @@
   themes: light --default, dark --prefersdark, cupcake, synthwave;
 }
 
+/* Custom scrollbar for chat */
+.chat-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.5);
+  border-radius: 10px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 51, 234, 0.7);
+}
+
+/* Message animations */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.message-enter {
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+/* Emoji picker animations */
+@keyframes emojiPickerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.emoji-picker-enter {
+  animation: emojiPickerSlideUp 0.2s ease-out;
+}
+
+/* Dark theme overrides for better contrast */
+[data-theme="dark"] {
+  --text-color: #ffffff;
+  --bg-color: #1a1a1a;
+  --message-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Text visibility improvements */
+.text-visible {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.message-text {
+  color: #ffffff !important;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
