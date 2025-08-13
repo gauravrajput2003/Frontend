@@ -20,8 +20,13 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       // Initialize socket connection
-      const newSocket = io(window.location.hostname === 'localhost' ? 'http://localhost:9931' : 'http://51.21.131.83:9931', {
+      const isLocal = window.location.hostname === 'localhost';
+      const socketURL = isLocal
+        ? 'http://localhost:9931'
+        : `${window.location.protocol}//${window.location.host}`; // same host (codeally.online)
+      const newSocket = io(socketURL, {
         withCredentials: true,
+        transports: ['websocket', 'polling']
       });
 
       // Join with user ID when connected

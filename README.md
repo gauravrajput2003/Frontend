@@ -40,10 +40,26 @@ http://51.21.131.83
         proxy_cache_bypass $http_upgrade;
     }
 
-# steps in git bash 
-1. C:\Users\gaura\ or  
-1.1  cd ~/Downloads
+# steps in git bash for production
+#1st step
+cd ~/Downloads
 cd ~/DevTinder
+ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
+# if we change in backend follow this-
+cd ~/DevTinder
+git pull origin main
+npm install --legacy-peer-deps
+pm2 restart devtinder backend
+# if we change in Frontend follow this-
+cd ~/Frontend
+git pull origin main
+npm install --legacy-peer-deps
+npm run build
+---------------
+# restart nginx
+sudo systemctl restart nginx
+
+
 
 
 2. chmod 400 devTinder-gaurav.pem
