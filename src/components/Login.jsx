@@ -37,7 +37,10 @@ const Login = () => {
         email,
         password
       }, {
-        withCredentials: true
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
 
       dispatch(addUser(res.data.user));
