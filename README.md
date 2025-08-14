@@ -28,19 +28,60 @@ i did clone
   ##for frontend
 then , npm i, npm run dev
 
-# deployed link of frontend
-http://51.21.131.83
-# nginx config
+## Deployed link (use HTTPS domain)
+https://codeally.online
+
+## API base URL (no .env needed)
+In `src/utils/Constant.js` the base URL switches automatically:
+
+```js
+const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+export const BASE_URL = isLocalHost
+  ? "http://localhost:9931"
+  : `${window.location.origin}/api`;
+```
+
+## Nginx config (production)
+Put this in `/etc/nginx/sites-available/default` and replace cert paths if needed:
+
+```nginx
+  server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name codeally.online www.codeally.online;
+    return 301 https://$host$request_uri;
+  }
+
+  server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name codeally.online www.codeally.online;
+
+    ssl_certificate /etc/letsencrypt/live/codeally.online/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/codeally.online/privkey.pem;
+
+    root /var/www/html;
+    index index.html;
+
+    # API proxy
     location /api/ {
-        proxy_pass http://localhost:9931/;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+      proxy_pass http://127.0.0.1:9931;
+      proxy_http_version 1.1;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_read_timeout 60s;
     }
 
-# steps in git bash for production
+    # SPA fallback
+    location / {
+      try_files $uri /index.html;
+    }
+  }
+```
+
+# Steps in git bash for production
 #1st step
 cd ~/Downloads
 cd ~/DevTinder
@@ -59,13 +100,17 @@ npm run build
 # restart nginx
 sudo systemctl restart nginx
 
+## Notes
+- Keep ports 80 and 443 open in the EC2 Security Group. You can restrict 9931; Nginx proxies locally.
+- Backend cookies are secure in production; using the domain + HTTPS is required for auth to persist.
+
 
 
 
 2. chmod 400 devTinder-gaurav.pem
 3. ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
 4. pm2 list    
-5. for edit nginx config
+5. # ---for edit nginx config
   sudo nano /etc/nginx/sites-available/default    
   after chaneg (ctrl+o for save press enter then ctrl+x)
 6. Test and restart Nginx 

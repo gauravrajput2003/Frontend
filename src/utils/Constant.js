@@ -1,8 +1,9 @@
-// Dynamic base URL without env vars
-// - Dev (when opening app on localhost): talk to local backend
-// - Prod (served from your domain): same-origin + /api (Nginx proxies to Node)
-const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
-export const BASE_URL = isLocalHost
-	? "http://localhost:9931"
-	: `${window.location.origin}/api`;
+// For local development
+//export const BASE_URL = "http://localhost:9931";
+
+// For production (deployed)
+export const BASE_URL = import.meta.env.PROD 
+  ? "https://codeally.online/api" 
+  : "http://localhost:9931/api";
+
 
