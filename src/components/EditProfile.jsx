@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/Constant';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const editProfile = ({user}) => {
   // Add null checks to prevent crashes
@@ -18,6 +19,7 @@ const editProfile = ({user}) => {
   const [profileSaved, setProfileSaved] = useState(false);
 
   const dispatch=useDispatch();
+  const navigate = useNavigate();
 
   // Update state when user prop loads
   useEffect(() => {
@@ -39,9 +41,11 @@ const editProfile = ({user}) => {
         setProfileSaved(true);
         setshowToast(true);
         
+        // Show success message for 2 seconds, then redirect to home/feed
         setTimeout(()=>{
           setshowToast(false);
-        },3000);
+          navigate('/'); // Redirect to home page (main feed)
+        }, 2000);
         
     } catch(err){
         setError(err.message);
@@ -221,7 +225,20 @@ const editProfile = ({user}) => {
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span>Your profile has been updated successfully!</span>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+                  <span>Your profile has been updated successfully!</span>
+                  <div className="flex gap-2 mt-2 sm:mt-0">
+                    <button 
+                      onClick={() => navigate('/')}
+                      className="btn btn-sm btn-primary"
+                    >
+                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                      </svg>
+                      Go to Home
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
             
@@ -238,7 +255,10 @@ const editProfile = ({user}) => {
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <span>Profile saved successfully!</span>
+            <div className="flex flex-col">
+              <span>Profile saved successfully!</span>
+              <span className="text-sm opacity-75">Redirecting to feed...</span>
+            </div>
           </div>
         )}
       </div>

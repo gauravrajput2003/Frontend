@@ -81,38 +81,126 @@ Put this in `/etc/nginx/sites-available/default` and replace cert paths if neede
   }
 ```
 
-# Steps in git bash for production
-#1st step
-cd ~/Downloads
-cd ~/DevTinder
+# 🚀 PRODUCTION DEPLOYMENT GUIDE
+
+## 📋 Prerequisites
+- AWS EC2 instance: `i-078203704ab1904a9` (51.21.131.83)
+- Domain: `codeally.online` pointing to EC2
+- PEM key: `devTinder-gaurav.pem`
+
+## 🔧 Initial Setup (One Time Only)
+```bash
+# 1. Set PEM permissions
+chmod 400 devTinder-gaurav.pem
+
+# 2. SSH to server
 ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
-# if we change in backend follow this-
+
+# 3. Check services status
+pm2 list
+```
+
+## 🔄 DEPLOYMENT WORKFLOW
+
+### 📱 For FRONTEND Changes (UI, Landing page, Chat, etc.)
+```bash
+# Step 1: SSH to server
+ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
+
+# Step 2: Update frontend code
+cd ~/Frontend
+git pull origin main
+
+# Step 3: Install new packages (only if you added new ones)
+npm install --legacy-peer-deps
+
+# Step 4: Build for production
+npm run build
+
+# ✅ DONE! Your site is now live at https://codeally.online
+```
+
+### 🖥️ For BACKEND Changes (APIs, Database, Business logic)
+```bash
+# Step 1: SSH to server
+ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
+
+# Step 2: Update backend code
 cd ~/DevTinder
 git pull origin main
+
+# Step 3: Install new packages (only if you added new ones)
 npm install --legacy-peer-deps
+
+# Step 4: Restart backend server
 pm2 restart devtinder-backend
-# if we change in Frontend follow this-
-  cd ~/Frontend
-git pull origin main
-npm install --legacy-peer-deps
-npm run build
----------------
-# restart nginx
+
+# ✅ DONE! Your APIs are now live
+```
+
+## 🔧 NGINX CONFIGURATION (Only edit if needed)
+
+**⚠️ IMPORTANT: Use the CORRECT config file**
+```bash
+# Edit the CORRECT nginx config file (NOT default!)
+sudo nano /etc/nginx/sites-available/codeally.online
+
+# After editing:
+sudo nginx -t                    # Test config
+sudo systemctl restart nginx     # Restart nginx
+```
+
+**Correct Nginx Config:**
+```nginx
+location /api/ {
+    proxy_pass http://127.0.0.1:9931;  # NO trailing slash!
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+## 🚨 TROUBLESHOOTING
+
+**If site is down:**
+```bash
+# Check backend status
+pm2 list
+pm2 logs devtinder-backend
+
+# Restart everything
+pm2 restart devtinder-backend
 sudo systemctl restart nginx
 
-## Notes
-- Keep ports 80 and 443 open in the EC2 Security Group. You can restrict 9931; Nginx proxies locally.
-- Backend cookies are secure in production; using the domain + HTTPS is required for auth to persist.
+# Test API
+curl https://codeally.online/api
+```
 
+**Health Check URLs:**
+- Website: https://codeally.online
+- API: https://codeally.online/api
 
+## 📝 QUICK REFERENCE
 
+**Frontend deployment:** `git pull` → `npm run build`  
+**Backend deployment:** `git pull` → `pm2 restart devtinder-backend`  
+**Both changed:** Do frontend first, then backend
 
-2. chmod 400 devTinder-gaurav.pem
-3. ssh -i "devTinder-gaurav.pem" ubuntu@ec2-51-21-131-83.eu-north-1.compute.amazonaws.com
-4. pm2 list    
-5. # ---for edit nginx config
-  sudo nano /etc/nginx/sites-available/default    
-  after chaneg (ctrl+o for save press enter then ctrl+x)
-6. Test and restart Nginx 
-sudo nginx -t
-sudo systemctl restart nginx 
+## ⚠️ CRITICAL NOTES
+- ✅ Nginx config file: `/etc/nginx/sites-available/codeally.online` (NOT default!)
+- ✅ Proxy pass: `http://127.0.0.1:9931` (NO trailing slash!)
+- ✅ Always test locally before deploying
+- ✅ Frontend builds to `/var/www/codeally.online` 
+ # sending email using ses
+ - create a IAM user
+ - give acces to amazomsesFull access
+ -create ses:create identity
+ -verify email and domain name
+ - intall aws sdk v3
+ -steup sesclient
+ -acces credential should be created in Iam under securityCrenditail tab
+ -add the credital to the env file
+ -write code for sending email address 
+ -make the email dynamic 
