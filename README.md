@@ -117,6 +117,9 @@ npm install --legacy-peer-deps
 # Step 4: Build for production
 npm run build
 
+# Step 5: Copy build files to web directory
+sudo cp -r dist/* /var/www/html/
+
 # ✅ DONE! Your site is now live at https://codeally.online
 ```
 
@@ -132,8 +135,8 @@ git pull origin main
 # Step 3: Install new packages (only if you added new ones)
 npm install --legacy-peer-deps
 
-# Step 4: Restart backend server
-pm2 restart devtinder-backend
+# Step 4: Restart backend server with updated environment variables
+pm2 restart devtinder-backend --update-env
 
 # ✅ DONE! Your APIs are now live
 ```

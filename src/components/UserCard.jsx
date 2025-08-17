@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { BASE_URL } from '../utils/Constant';
 
-const UserCard = ({ user, onUserAction }) => {
+const UserCard = ({ user, onUserAction, interactive = true }) => {
   const [isCardAnimating, setIsCardAnimating] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState(null);
 
@@ -38,6 +38,10 @@ const UserCard = ({ user, onUserAction }) => {
   };
 
   const handleSendRequest = async (status, userId) => {
+    if (!interactive || !userId) {
+      // In preview mode or missing id – do nothing
+      return;
+    }
     try {
       console.log('Sending request:', status, 'for user:', userId);
       const res = await axios.post(`${BASE_URL}/request/send/${status}/${userId}`, {}, {
@@ -205,10 +209,10 @@ const UserCard = ({ user, onUserAction }) => {
                   )}
                   
                   {/* Enhanced action buttons */}
-                  <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center">
                     <button
-                      onClick={() => handleSendRequest("ignore", _id)}
-                      disabled={isCardAnimating}
+            onClick={() => handleSendRequest("ignore", _id)}
+            disabled={!interactive || isCardAnimating}
                       className="flex-1 bg-gradient-to-r from-red-500/90 to-pink-500/90 hover:from-red-500 hover:to-pink-500 text-white font-bold py-4 px-6 rounded-2xl border border-red-400/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                     >
                       <span className="flex items-center justify-center gap-2">
@@ -221,7 +225,7 @@ const UserCard = ({ user, onUserAction }) => {
                     
                     <button
                       onClick={() => handleSendRequest("interested", _id)}
-                      disabled={isCardAnimating}
+                      disabled={!interactive || isCardAnimating}
                       className="flex-1 bg-gradient-to-r from-emerald-500/90 to-green-500/90 hover:from-emerald-500 hover:to-green-500 text-white font-bold py-4 px-6 rounded-2xl border border-emerald-400/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                     >
                       <span className="flex items-center justify-center gap-2">

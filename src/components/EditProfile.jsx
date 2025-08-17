@@ -242,7 +242,7 @@ const editProfile = ({user}) => {
               </div>
             )}
             
-            <UserCard user={{firstName,lastName,age,gender,photoUrl:photo,about}}/>
+            <UserCard user={{firstName,lastName,age,gender,photoUrl:photo,about}} interactive={false}/>
           </div>
         </div>
 

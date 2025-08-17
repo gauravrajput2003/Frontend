@@ -9,6 +9,7 @@ import Feed from './components/Feed';
 import Connections from './components/Connections';
 import Requests from './components/Requests';
 import Particles from "react-tsparticles";
+import Premium from './components/Premium';
 
 const particlesOptions = {
   fpsLimit: 60,
@@ -86,6 +87,7 @@ const App = () => {
                   <Route path="login" element={<Login />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="connections" element={<Connections />} />
+                  <Route path="premium" element={<Premium />} />
                   <Route path="requests" element={<Requests />} />
                 </Route>
               </Routes>

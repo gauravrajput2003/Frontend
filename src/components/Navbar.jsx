@@ -70,6 +70,11 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/premium" className="hover:bg-primary hover:text-white">
+                 premium
+                </Link>
+              </li>
+              <li>
                 <a onClick={LogoutUser} className="hover:bg-error hover:text-white">
                   Logout
                 </a>
