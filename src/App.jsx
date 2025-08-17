@@ -10,6 +10,7 @@ import Connections from './components/Connections';
 import Requests from './components/Requests';
 import Particles from "react-tsparticles";
 import Premium from './components/Premium';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 const particlesOptions = {
   fpsLimit: 60,
@@ -89,6 +90,7 @@ const App = () => {
                   <Route path="connections" element={<Connections />} />
                   <Route path="premium" element={<Premium />} />
                   <Route path="requests" element={<Requests />} />
+                  <Route path="privacy" element={<PrivacyPolicy />} />
                 </Route>
               </Routes>
             </div>
