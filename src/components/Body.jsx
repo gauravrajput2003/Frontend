@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import axios from 'axios';
 import { BASE_URL } from '../utils/Constant';
@@ -10,8 +10,13 @@ import { addUser } from '../utils/userSlice';
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((store) => store.user);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Public routes that don't require auth
+  const publicPaths = ["/login", "/privacy"];
+  const isPublicRoute = publicPaths.includes(location.pathname);
 
   const fetchUser = async () => {
     try {
@@ -21,31 +26,47 @@ const Body = () => {
       dispatch(addUser(res.data));
       setIsLoading(false);
     } catch (err) {
-      setIsLoading(false);
       console.log("Not authenticated, redirecting to login");
-      navigate("/login"); // This should redirect to login
+      setIsLoading(false);
+      navigate("/login", { replace: true });
     }
   }
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !isPublicRoute) {
       fetchUser();
     } else {
       setIsLoading(false);
     }
-  }, []);
+    // re-evaluate when route changes between public/protected
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPublicRoute]);
 
-  if (isLoading) {
+  if (isLoading && !isPublicRoute) {
     return (
       <div>
         <Navbar />
         <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
-          <div className="loading loading-spinner loading-lg"></div>
+          <div className="loading loading-spinner loading-lg text-sky-400"></div>
         </div>
         <Footer />
       </div>
     );
   }
+
+  // Allow public routes even when not authenticated
+  if (isPublicRoute) {
+    return (
+      <div>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </div>
+    );
+  }
+
+  // If not logged in (protected route) and not loading, don't render content
+  if (!user) return null;
 
   return (
     <div>

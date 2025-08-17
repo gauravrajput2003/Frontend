@@ -117,7 +117,8 @@ npm install --legacy-peer-deps
 # Step 4: Build for production
 npm run build
 
-# Step 5: Copy build files to web directory
+# Step 5: Deploy build (replace old files with new)
+sudo rm -rf /var/www/html/*
 sudo cp -r dist/* /var/www/html/
 
 # ✅ DONE! Your site is now live at https://codeally.online
@@ -195,7 +196,12 @@ curl https://codeally.online/api
 - ✅ Nginx config file: `/etc/nginx/sites-available/codeally.online` (NOT default!)
 - ✅ Proxy pass: `http://127.0.0.1:9931` (NO trailing slash!)
 - ✅ Always test locally before deploying
-- ✅ Frontend builds to `/var/www/codeally.online` 
+- ✅ Frontend builds to `dist/`; deploy by copying to `/var/www/html`
+
+### If changes don’t show up
+- Check deployed files: `ls -lah /var/www/html/`
+- Hard refresh the browser (Ctrl/Cmd+Shift+R) or try Incognito
+- Verify Nginx root: it should be `root /var/www/html;` in `/etc/nginx/sites-available/codeally.online`
  # sending email using ses
  - create a IAM user
  - give acces to amazomsesFull access

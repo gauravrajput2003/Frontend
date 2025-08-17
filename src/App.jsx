@@ -11,6 +11,7 @@ import Requests from './components/Requests';
 import Particles from "react-tsparticles";
 import Premium from './components/Premium';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const particlesOptions = {
   fpsLimit: 60,
@@ -84,12 +85,47 @@ const App = () => {
             <div className="relative z-10" style={{ position: "relative", zIndex: 5 }}>
               <Routes>
                 <Route path="/" element={<Body />}>
-                  <Route index element={<Feed />} />
+                  <Route
+                    index
+                    element={
+                      <ProtectedRoute>
+                        <Feed />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route path="login" element={<Login />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="connections" element={<Connections />} />
-                  <Route path="premium" element={<Premium />} />
-                  <Route path="requests" element={<Requests />} />
+                  <Route
+                    path="profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="connections"
+                    element={
+                      <ProtectedRoute>
+                        <Connections />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="premium"
+                    element={
+                      <ProtectedRoute>
+                        <Premium />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="requests"
+                    element={
+                      <ProtectedRoute>
+                        <Requests />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route path="privacy" element={<PrivacyPolicy />} />
                 </Route>
               </Routes>
