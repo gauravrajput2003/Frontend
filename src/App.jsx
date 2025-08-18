@@ -10,6 +10,8 @@ import Connections from './components/Connections';
 import Requests from './components/Requests';
 import Particles from "react-tsparticles";
 import Premium from './components/Premium';
+import About from './components/About';
+import Contact from './components/Contact';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -126,6 +128,8 @@ const App = () => {
                       </ProtectedRoute>
                     }
                   />
+                  <Route path="about" element={<About />} />
+                  <Route path="contact" element={<Contact />} />
                   <Route path="privacy" element={<PrivacyPolicy />} />
                 </Route>
               </Routes>

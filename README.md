@@ -120,6 +120,9 @@ npm run build
 # Step 5: Deploy build (replace old files with new)
 sudo rm -rf /var/www/html/*
 sudo cp -r dist/* /var/www/html/
+# updated
+sudo rm -rf /var/www/codeally.online/*
+sudo cp -r dist/* /var/www/codeally.online/
 
 # ✅ DONE! Your site is now live at https://codeally.online
 ```

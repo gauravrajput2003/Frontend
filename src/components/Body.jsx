@@ -15,7 +15,7 @@ const Body = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // Public routes that don't require auth
-  const publicPaths = ["/login", "/privacy"];
+  const publicPaths = ["/login", "/privacy", "/about", "/contact"];
   const isPublicRoute = publicPaths.includes(location.pathname);
 
   const fetchUser = async () => {
