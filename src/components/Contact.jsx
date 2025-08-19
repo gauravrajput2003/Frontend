@@ -166,7 +166,7 @@ const Contact = () => {
                       href="mailto:gauravrajput2003@gmail.com" 
                       className="text-blue-400 hover:text-blue-300 transition-colors duration-200"
                     >
-                      gauravrajput2003@gmail.com
+                   gauravsingh032002@gmail.com
                     </a>
                   </div>
                 </div>
@@ -177,12 +177,12 @@ const Contact = () => {
                   <div>
                     <p className="text-slate-300 text-sm">WhatsApp</p>
                     <a 
-                      href="https://wa.me/+917905071763" 
+                      href="https://wa.me/+916203615319" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-green-400 hover:text-green-300 transition-colors duration-200"
                     >
-                      +91 79050 71763
+                      +91 6203615319
                     </a>
                   </div>
                 </div>
@@ -206,7 +206,7 @@ const Contact = () => {
                   </div>
                 </a>
                 <a 
-                  href="https://linkedin.com/in/gauravrajput2003" 
+                  href="https://www.linkedin.com/in/gaurav-singh-aa7a0a196/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
@@ -218,7 +218,7 @@ const Contact = () => {
                   </div>
                 </a>
                 <a 
-                  href="https://twitter.com/gauravrajput03" 
+                  href="https://x.com/GauravS36812804" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
@@ -230,7 +230,7 @@ const Contact = () => {
                   </div>
                 </a>
                 <a 
-                  href="https://instagram.com/gauravrajput2003" 
+                  href="https://www.instagram.com/gaurav.rajput_2/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
@@ -238,7 +238,7 @@ const Contact = () => {
                   <span className="text-2xl group-hover:scale-110 transition-transform duration-200">📸</span>
                   <div>
                     <p className="text-white font-medium">Instagram</p>
-                    <p className="text-slate-400 text-sm">@gauravrajput2003</p>
+                    <p className="text-slate-400 text-sm">@gaurav.rajput_2</p>
                   </div>
                 </a>
               </div>

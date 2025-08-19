@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/Constant';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addConnection } from '../utils/connectionSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Connections = () => {
     const connection=useSelector((store)=>store.connection);
@@ -38,7 +38,7 @@ dispatch(addConnection(res.data.data));
         <h1 className='text-bold text-3xl text-center mb-8 text-primary'>Your Connections</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {connection.map((connection, index) => {
-            const {firstName,lastName,photoUrl,age,gender,about,skills}=connection;
+            const {_id,firstName,lastName,photoUrl,age,gender,about,skills}=connection;
             // Chat data removed
             
             // Handle skills - ensure it's always an array
@@ -84,7 +84,7 @@ dispatch(addConnection(res.data.data));
                         {/* Last message preview removed */}
                         
                         <div className="card-actions justify-center mt-4 space-x-2">
-                            <button 
+                          <Link to={"/chat/"+_id}>  <button 
                                 className="btn btn-sm btn-primary gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
                                 onClick={() => handleMessage(connection._id)}
                             >
@@ -92,7 +92,7 @@ dispatch(addConnection(res.data.data));
                                     <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
                                 </svg>
                                 Message
-                            </button>
+                            </button></Link>
                             <button className="btn btn-outline btn-sm gap-2 hover:shadow-lg transition-all duration-300">
                                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>

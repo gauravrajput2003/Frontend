@@ -21,6 +21,7 @@
     "react-router-dom": "^7.7.0",
     "react-tinder-card": "^1.6.4",
     "react-tsparticles": "^2.12.2",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.11",
     "tsparticles": "^3.8.1"
   },

@@ -14,6 +14,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ProtectedRoute from './components/ProtectedRoute';
+import Chat from './components/Chat';
 
 const particlesOptions = {
   fpsLimit: 60,
@@ -130,6 +131,7 @@ const App = () => {
                   />
                   <Route path="about" element={<About />} />
                   <Route path="contact" element={<Contact />} />
+                  <Route path="chat/:targetuserId" element={<Chat/>} />
                   <Route path="privacy" element={<PrivacyPolicy />} />
                 </Route>
               </Routes>
