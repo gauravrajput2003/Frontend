@@ -102,6 +102,16 @@ const Chat = () => {
   const sendMessage = async () => {
     if (newMessage.trim()) {
       const socket = createSocketConnection();
+      // Optimistically add the message to the UI
+      setMessages((prev) => [
+        ...prev,
+        {
+          firstName: "You",
+          text: newMessage,
+          isOwn: true,
+          timestamp: new Date().toISOString()
+        }
+      ]);
       // Send message to backend
       socket.emit("sendMessage", {
         firstName: user.firstName,
@@ -111,7 +121,7 @@ const Chat = () => {
         text: newMessage,
       });
       setNewMessage("");
-      // Wait a moment for backend to save, then re-fetch chat history
+      // Optionally, you can still fetch messages after a delay to sync
       setTimeout(() => {
         fetchMessage();
       }, 300);
