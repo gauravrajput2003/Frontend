@@ -104,7 +104,7 @@ const UserCard = ({ user, onUserAction, interactive = true }) => {
             }}
           >
             {/* Main card with enhanced glassmorphism */}
-            <div className="relative bg-white/15 backdrop-blur-2xl rounded-3xl border border-white/30 shadow-2xl w-96 overflow-hidden hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-3xl">
+            <div className="relative bg-white/15 backdrop-blur-2xl rounded-3xl border border-white/30 shadow-2xl w-full max-w-xs sm:max-w-md md:max-w-lg overflow-hidden hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-3xl">
               
               {/* Swipe indicators */}
               {swipeDirection === "interested" && (
@@ -138,7 +138,7 @@ const UserCard = ({ user, onUserAction, interactive = true }) => {
                 <img
                   src={photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
                   alt="user"
-                  className="w-full h-72 object-cover rounded-t-3xl"
+                  className="w-full h-56 sm:h-72 object-cover rounded-t-3xl"
                 />
                 
                 {/* Online status indicator */}
@@ -151,7 +151,7 @@ const UserCard = ({ user, onUserAction, interactive = true }) => {
               </div>
 
               {/* Card content with better contrast */}
-              <div className="p-6 relative">
+              <div className="p-4 sm:p-6 relative">
                 {/* Background pattern for better text visibility */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-b-3xl"></div>
                 
@@ -176,7 +176,7 @@ const UserCard = ({ user, onUserAction, interactive = true }) => {
                     {about || "No description available"}
                   </p>
                   
-                  {/* Skills section - Enhanced Design */}
+                  {/* Skills section - Enhanced Design (Horizontal Row) */}
                   {skillsArray && skillsArray.length > 0 && (
                     <div className="mb-6">
                       <div className="flex items-center gap-2 mb-3">
@@ -189,20 +189,20 @@ const UserCard = ({ user, onUserAction, interactive = true }) => {
                           Technical Skills
                         </h3>
                       </div>
-                      <div className="space-y-2">
-                        {skillsArray.slice(0, 3).map((skill, index) => (
-                          <div
+                      <div className="flex flex-wrap gap-2 justify-center items-center">
+                        {skillsArray.slice(0, 5).map((skill, index) => (
+                          <span
                             key={index}
-                            className="bg-gradient-to-r from-sky-500/20 to-blue-500/20 backdrop-blur-lg text-white text-sm px-4 py-2.5 rounded-xl border border-sky-400/30 font-medium hover:from-sky-400/30 hover:to-blue-400/30 transition-all duration-300 shadow-lg text-center truncate"
-                            title={skill} // Tooltip for full skill name
+                            className="bg-gradient-to-r from-sky-500/20 to-blue-500/20 backdrop-blur-lg text-white text-sm px-4 py-2 rounded-xl border border-sky-400/30 font-medium hover:from-sky-400/30 hover:to-blue-400/30 transition-all duration-300 shadow text-center truncate max-w-[120px]"
+                            title={skill}
                           >
                             {skill.length > 20 ? skill.substring(0, 20) + '...' : skill}
-                          </div>
+                          </span>
                         ))}
-                        {skillsArray.length > 3 && (
-                          <div className="bg-white/10 backdrop-blur-lg text-white/80 text-sm px-4 py-2.5 rounded-xl border border-white/20 font-medium text-center">
-                            +{skillsArray.length - 3} more skills
-                          </div>
+                        {skillsArray.length > 5 && (
+                          <span className="bg-white/10 backdrop-blur-lg text-white/80 text-sm px-4 py-2 rounded-xl border border-white/20 font-medium text-center">
+                            +{skillsArray.length - 5} more
+                          </span>
                         )}
                       </div>
                     </div>

@@ -31,7 +31,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-20 px-4">
+  <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] py-20 px-4" style={{backgroundImage: "radial-gradient(circle at 25% 25%, rgba(120,119,198,0.08) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,119,198,0.08) 0%, transparent 50%)"}}>
       <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -192,53 +192,57 @@ const Contact = () => {
             {/* Social Media */}
             <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
               <h3 className="text-2xl font-bold text-white mb-6">Connect with Me</h3>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-4">
                 <a 
                   href="https://github.com/gauravrajput2003" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
+                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group min-w-0 overflow-x-auto"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform duration-200">🐙</span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-white font-medium">GitHub</p>
-                    <p className="text-slate-400 text-sm">@gauravrajput2003</p>
+                    <p className="text-slate-400 text-sm truncate max-w-[120px] sm:max-w-[160px]">@gauravrajput2003</p>
                   </div>
                 </a>
                 <a 
                   href="https://www.linkedin.com/in/gaurav-singh-aa7a0a196/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
+                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group min-w-0 overflow-x-auto"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform duration-200">💼</span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-white font-medium">LinkedIn</p>
-                    <p className="text-slate-400 text-sm">@gauravrajput2003</p>
+                    <p className="text-slate-400 text-sm truncate max-w-[120px] sm:max-w-[160px]">@gauravrajput2003</p>
                   </div>
                 </a>
                 <a 
                   href="https://x.com/GauravS36812804" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
+                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group min-w-0 overflow-x-auto"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform duration-200">🐦</span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-white font-medium">Twitter</p>
-                    <p className="text-slate-400 text-sm">@gauravrajput03</p>
+                    <p className="text-slate-400 text-sm truncate max-w-[120px] sm:max-w-[160px]">@gauravrajput03</p>
                   </div>
                 </a>
                 <a 
                   href="https://www.instagram.com/gaurav.rajput_2/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group"
+                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-all duration-200 group min-w-0 overflow-x-auto"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform duration-200">📸</span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-white font-medium">Instagram</p>
-                    <p className="text-slate-400 text-sm">@gaurav.rajput_2</p>
+                    <p className="text-slate-400 text-sm truncate max-w-[120px] sm:max-w-[160px]">@gaurav.rajput_2</p>
                   </div>
                 </a>
               </div>

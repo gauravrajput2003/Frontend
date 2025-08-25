@@ -31,82 +31,84 @@ dispatch(addConnection(res.data.data));
     useEffect(()=>{
         fetchConn();
     },[]);
-    if(!connection)return;
-    if(connection.length===0)return <div className="flex justify-center items-center min-h-[400px]"><h1 className="text-3xl font-bold text-error">No connections found</h1></div>
-  return (
-    <div className='container mx-auto px-4 py-8'>
-        <h1 className='text-bold text-3xl text-center mb-8 text-primary'>Your Connections</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {connection.map((connection, index) => {
-            const {_id,firstName,lastName,photoUrl,age,gender,about,skills}=connection;
-            // Chat data removed
-            
-            // Handle skills - ensure it's always an array
-            const skillsArray = skills ? (Array.isArray(skills) ? skills : (typeof skills === 'string' ? skills.split(',').map(s => s.trim()).filter(s => s.length > 0) : [])) : [];
-            
-            return(
-                <div key={index} className='card bg-base-300 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
-                    <figure className="px-6 pt-6">
-                        <img 
-                            alt='photo' 
-                            className='rounded-lg w-full h-52 object-cover' 
-                            src={photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
-                        />
-                    </figure>
-                    <div className='card-body items-center text-center'>
-                        <h2 className='card-title text-xl font-bold text-primary'>{firstName+" "+lastName}</h2>
-                        {age && gender && <p className="text-base-content/70 text-sm">{age+", "+gender}</p>}
-                        <p className="text-base-content/80 text-sm line-clamp-3">{about}</p>
-                        
-                        {/* Skills section */}
-                        {skillsArray && skillsArray.length > 0 && (
-                            <div className="w-full mt-3">
-                                <h4 className="text-xs font-semibold text-base-content/60 mb-2 uppercase tracking-wide">Skills</h4>
-                                <div className="flex flex-wrap justify-center gap-1">
-                                    {skillsArray.slice(0, 3).map((skill, skillIndex) => (
-                                        <span
-                                            key={skillIndex}
-                                            className="bg-primary/20 text-primary text-xs px-2 py-1 rounded-full border border-primary/30 font-medium truncate max-w-[80px]"
-                                            title={skill}
-                                        >
-                                            {skill.length > 8 ? skill.substring(0, 8) + '...' : skill}
-                                        </span>
-                                    ))}
-                                    {skillsArray.length > 3 && (
-                                        <span className="bg-base-content/10 text-base-content/60 text-xs px-2 py-1 rounded-full border border-base-content/20">
-                                            +{skillsArray.length - 3}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                        
-                        {/* Last message preview removed */}
-                        
-                        <div className="card-actions justify-center mt-4 space-x-2">
-                          <Link to={"/chat/"+_id}>  <button 
-                                className="btn btn-sm btn-primary gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
-                                onClick={() => handleMessage(connection._id)}
-                            >
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
-                                </svg>
-                                Message
-                            </button></Link>
-                            <button className="btn btn-outline btn-sm gap-2 hover:shadow-lg transition-all duration-300">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
-                                </svg>
-                                Profile
-                            </button>
+        if(!connection)return;
+        if(connection.length===0)return <div className="flex justify-center items-center min-h-[400px] bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] w-full h-screen"><h1 className="text-3xl font-bold text-error my-3">No connections found</h1></div>
+    return (
+        <div className="relative min-h-screen w-full">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a]" />
+            <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 pt-20 sm:pt-24">
+                        <h1 className="font-extrabold text-3xl sm:text-4xl text-center mb-8 sm:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-sky-400 to-emerald-400 drop-shadow-lg tracking-tight">Your Connections</h1>
+                        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-8 xl:gap-8">
+                            {connection.map((connection, index) => {
+                                const { _id, firstName, lastName, photoUrl, age, gender, about, skills } = connection;
+                                const skillsArray = skills ? (Array.isArray(skills) ? skills : (typeof skills === 'string' ? skills.split(',').map(s => s.trim()).filter(s => s.length > 0) : [])) : [];
+                                return (
+                                    <div key={index} className="attractive-card relative group overflow-hidden w-full max-w-xs min-h-[320px] flex flex-col justify-between mx-auto p-3 sm:p-4">
+                                        {/* Glow border effect */}
+                                        <div className="absolute inset-0 pointer-events-none z-0 group-hover:shadow-[0_0_40px_10px_rgba(34,197,94,0.15)] transition-all duration-300"></div>
+                                        {/* Profile image */}
+                                        <div className="flex justify-center items-center pt-8 pb-2 px-8">
+                                            <img
+                                                alt="profile"
+                                                className="rounded-2xl w-full h-36 object-cover border-4 border-white/10 shadow-lg group-hover:border-emerald-400/40 transition-all duration-300"
+                                                src={photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                                            />
+                                        </div>
+                                        {/* Card content */}
+                                        <div className="relative z-10 flex flex-col items-center text-center px-8 pt-2 flex-1">
+                                            <h2 className="text-xl font-bold text-sky-300 mb-1 tracking-tight drop-shadow-lg">{firstName + " " + lastName}</h2>
+                                            {age && gender && <p className="text-emerald-200 text-sm mb-1 font-medium">{age} yrs • {gender}</p>}
+                                            <p className="text-slate-200/90 text-base mb-4 min-h-[48px] line-clamp-4">{about || "No description available"}</p>
+                                            {/* Skills section */}
+                                            {skillsArray && skillsArray.length > 0 && (
+                                                <div className="w-full mt-2 mb-4">
+                                                    <h4 className="text-xs font-semibold text-sky-400 mb-2 uppercase tracking-widest">Skills</h4>
+                                                    <div className="flex flex-wrap justify-center gap-2">
+                                                        {skillsArray.slice(0, 5).map((skill, skillIndex) => (
+                                                            <span
+                                                                key={skillIndex}
+                                                                className="bg-gradient-to-r from-purple-500/20 to-sky-400/20 text-sky-200 text-xs px-3 py-1 rounded-full border border-sky-400/30 font-semibold shadow hover:from-purple-400/40 hover:to-sky-400/40 transition-all duration-200 truncate max-w-[100px]"
+                                                                title={skill}
+                                                            >
+                                                                {skill.length > 12 ? skill.substring(0, 12) + '…' : skill}
+                                                            </span>
+                                                        ))}
+                                                        {skillsArray.length > 5 && (
+                                                            <span className="bg-slate-700/60 text-sky-300 text-xs px-3 py-1 rounded-full border border-sky-400/20 font-semibold">+{skillsArray.length - 5} more</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {/* Action buttons */}
+                                            <div className="flex gap-3 justify-center mt-2 mb-4">
+                                                <Link to={"/chat/" + _id}>
+                                                    <button
+                                                        className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-sky-400 text-white font-bold shadow-lg hover:from-purple-600 hover:to-sky-500 hover:scale-105 transition-all duration-200"
+                                                        onClick={() => handleMessage(connection._id)}
+                                                    >
+                                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
+                                                        </svg>
+                                                        Message
+                                                    </button>
+                                                </Link>
+                                                <button
+                                                    className="flex items-center gap-2 px-5 py-2 rounded-xl border-2 border-sky-400 text-sky-300 font-bold bg-transparent hover:bg-sky-400/10 hover:scale-105 transition-all duration-200 shadow"
+                                                >
+                                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
+                                                    </svg>
+                                                    Profile
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
-                    </div>
+                  </div>
                 </div>
-            );
-        })}
-        </div>
-    </div>
-  )
-}
+              );
+            }
 
-export default Connections
+            export default Connections;

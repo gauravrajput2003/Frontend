@@ -65,23 +65,23 @@ const Navbar = () => {
     };
   }, []);
   return (
-    <nav className="bg-slate-900/95 backdrop-blur-md border-b border-slate-800/50 sticky top-0 z-[60] shadow-2xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className="bg-slate-900/95 backdrop-blur-md border-b border-slate-800/50 sticky top-0 z-[60] shadow-2xl w-full">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="flex justify-between items-center h-16 w-full">
           {/* Logo Section */}
-          <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-3 text-white hover:text-purple-400 transition-colors duration-300">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-lg">
+          <div className="flex items-center gap-4 sm:gap-8 min-w-0">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 text-white hover:text-purple-400 transition-colors duration-300 min-w-0">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-lg flex-shrink-0">
                 D
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent truncate block max-w-[100px] sm:max-w-none">
                 DevNexus
               </span>
             </Link>
             
             {/* Navigation Links */}
             {user && (
-              <div className="hidden md:flex items-center gap-6">
+              <div className="hidden md:flex items-center gap-3 lg:gap-6">
                 <Link 
                   to="/" 
                   className="text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-all duration-200 flex items-center gap-2"
@@ -122,7 +122,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             {user ? (
               <>
                 {/* Mobile Menu Button - Only show on mobile */}
@@ -155,23 +155,23 @@ const Navbar = () => {
                 )}
 
                 {/* User Profile Dropdown */}
-                <div className="dropdown dropdown-end" ref={dropdownRef}>
+                <div className="dropdown dropdown-end min-w-0" ref={dropdownRef}>
                   <div 
                     tabIndex={0} 
                     role="button" 
-                    className="flex items-center gap-3 cursor-pointer hover:bg-slate-800/50 rounded-lg p-2 transition-all duration-200"
+                    className="flex items-center gap-2 sm:gap-3 cursor-pointer hover:bg-slate-800/50 rounded-lg p-2 transition-all duration-200 min-w-0"
                     onClick={handleDropdownToggle}
                   >
-                    <div className="hidden sm:block text-right">
-                      <p className="text-white text-sm font-medium">
+                    <div className="hidden sm:block text-right min-w-0">
+                      <p className="text-white text-xs sm:text-sm font-medium truncate max-w-[80px]">
                         {user?.firstName?.trim() || 'User'}
                       </p>
-                      <p className="text-slate-400 text-xs">
+                      <p className="text-slate-400 text-[10px] sm:text-xs truncate max-w-[80px]">
                         {user?.isPremium ? 'Premium Member' : 'Free Member'}
                       </p>
                     </div>
                     <div className="relative">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500/50 hover:border-purple-400 transition-colors">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500/50 hover:border-purple-400 transition-colors flex-shrink-0">
                         <img
                           alt="User photo"
                           src={user?.photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
@@ -303,7 +303,7 @@ const Navbar = () => {
         <div className="md:hidden fixed inset-0 bg-black/50 z-50" onClick={closeMobileMenu}>
           <div 
             ref={mobileMenuRef}
-            className="fixed top-0 right-0 h-full w-64 bg-slate-900/98 backdrop-blur-md border-l border-slate-700/50 shadow-2xl transform transition-transform duration-300"
+            className="fixed top-0 right-0 h-full w-11/12 max-w-xs bg-slate-900/98 backdrop-blur-md border-l border-slate-700/50 shadow-2xl transform transition-transform duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4">

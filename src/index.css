@@ -1,13 +1,64 @@
+/* Attractive glassmorphism card for connections and profile cards */
+.attractive-card {
+  background: rgba(30, 41, 59, 0.7);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  color: #fff;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.attractive-card:hover {
+  box-shadow: 0 12px 40px 0 rgba(34, 197, 94, 0.18), 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transform: translateY(-4px) scale(1.03);
+}
 @import "tailwindcss";
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark, cupcake, synthwave;
 }
 
+/* Root Variables for Consistent Theming */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --backdrop-blur: blur(20px);
+  --shadow-elegant: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 40px rgba(103, 126, 234, 0.3);
+}
+
 /* Dark theme overrides for better contrast */
 [data-theme="dark"] {
   --text-color: #ffffff;
-  --bg-color: #1a1a1a;
+  --bg-color: #0f172a;
   --message-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Global Background with Professional Pattern */
+body {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Text visibility improvements */
@@ -22,3 +73,215 @@
   line-height: 1.5;
 }
 
+/* ==================== FEED SPECIFIC STYLES ==================== */
+
+/* Simple feed container for clean user card display */
+.feed-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem 1rem;
+}
+
+/* Loading states with transparent background */
+.feed-loading-card {
+  background: transparent;
+  padding: 3rem 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Status messages with transparent background */
+.feed-status-card {
+  background: transparent;
+  padding: 3rem 2rem;
+  max-width: 28rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.status-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.status-icon {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* Status Icon */
+.status-icon {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.celebration-icon {
+  position: relative;
+}
+
+.celebration-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #f093fb, #f5576c);
+  border-radius: 50%;
+  animation: celebrate 2s infinite;
+}
+
+.particle-1 { transform: rotate(0deg) translateY(-30px); animation-delay: 0s; }
+.particle-2 { transform: rotate(45deg) translateY(-30px); animation-delay: 0.2s; }
+.particle-3 { transform: rotate(90deg) translateY(-30px); animation-delay: 0.4s; }
+.particle-4 { transform: rotate(135deg) translateY(-30px); animation-delay: 0.6s; }
+.particle-5 { transform: rotate(180deg) translateY(-30px); animation-delay: 0.8s; }
+.particle-6 { transform: rotate(225deg) translateY(-30px); animation-delay: 1s; }
+.particle-7 { transform: rotate(270deg) translateY(-30px); animation-delay: 1.2s; }
+.particle-8 { transform: rotate(315deg) translateY(-30px); animation-delay: 1.4s; }
+
+/* Buttons */
+.feed-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(103, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.feed-primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(103, 126, 234, 0.4);
+}
+
+.feed-primary-button:active {
+  transform: translateY(0);
+}
+
+.feed-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.feed-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.feed-secondary-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ==================== ANIMATIONS ==================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes celebrate {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Simple responsive design */
+@media (max-width: 768px) {
+  .feed-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .feed-status-card {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem;
+  }
+  
+  .feed-loading-card {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem;
+  }
+}
+
+/* ==================== ENHANCED ACCESSIBILITY ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus States */
+.feed-primary-button:focus,
+.feed-secondary-button:focus {
+  outline: 2px solid rgba(103, 126, 234, 0.5);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .feed-loading-card,
+  .feed-status-card {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .progress-bar {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+}

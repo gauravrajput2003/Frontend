@@ -33,22 +33,35 @@ const editProfile = ({user}) => {
     }
   }, [user]);
 
-  const handleEdit=async()=>{
-    try{
-        const res=await axios.patch(BASE_URL+"/profile/edit",{firstName,lastName,age,gender,photoUrl:photo,about},{withCredentials:true})
-        dispatch(addUser(res?.data?.data));
-        
-        setProfileSaved(true);
-        setshowToast(true);
-        
-        // Show success message for 2 seconds, then redirect to home/feed
-        setTimeout(()=>{
-          setshowToast(false);
-          navigate('/'); // Redirect to home page (main feed)
-        }, 2000);
-        
-    } catch(err){
-        setError(err.message);
+  const handleEdit = async () => {
+    // Only send allowed fields and only validate firstName if changed
+    const payload = {};
+    if (firstName !== user?.firstName) {
+      if (!firstName || firstName.length < 4 || firstName.length > 50) {
+        setError("First name must be 4-50 characters if changed.");
+        return;
+      }
+      payload.firstName = firstName;
+    }
+    if (lastName !== user?.lastName) payload.lastName = lastName;
+    if (about !== user?.about) payload.about = about;
+    if (photo !== user?.photoUrl) payload.photoUrl = photo;
+    // Only send if changed
+    try {
+      const res = await axios.patch(
+        BASE_URL + "/profile/edit",
+        payload,
+        { withCredentials: true }
+      );
+      dispatch(addUser(res?.data?.data));
+      setProfileSaved(true);
+      setshowToast(true);
+      setTimeout(() => {
+        setshowToast(false);
+        navigate('/');
+      }, 2000);
+    } catch (err) {
+      setError(err?.response?.data?.message || err.message);
     }
   }
 
@@ -58,11 +71,27 @@ const editProfile = ({user}) => {
   }
 
   // Show loading if user is not loaded yet
+
   if (!user) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="loading loading-spinner loading-lg"></div>
         <p className="ml-4 text-lg">Loading profile...</p>
+      </div>
+    );
+  }
+
+  // Show error if any and allow retry
+  if (Error && !profileSaved) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="alert alert-error mb-4">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.728-.833-2.498 0L4.316 14.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          </svg>
+          <span>{Error}</span>
+        </div>
+        <button className="btn btn-primary" onClick={handleEditAgain}>Try Again</button>
       </div>
     );
   }

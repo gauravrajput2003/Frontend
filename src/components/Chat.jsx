@@ -128,14 +128,20 @@ const Chat = () => {
       return;
     }
     const socket = createSocketConnection();
-    
+    let connectionError = false;
+    // Graceful error handling for production
+    socket.on('connect_error', () => {
+      connectionError = true;
+      setIsOnline(false);
+    });
+    socket.on('error', () => {
+      connectionError = true;
+      setIsOnline(false);
+    });
     // Tell server this user is online
     socket.emit("userOnline", userId);
-    
     socket.emit("joinChat", { userId, targetuserId });
-    
     socket.on("messageReceived", ({ firstName, text }) => {
-      console.log(firstName + " " + text);
       if (firstName !== user.firstName) {
         setMessages((messages) => [
           ...messages,
@@ -148,28 +154,24 @@ const Chat = () => {
         ]);
       }
     });
-
     // Handle target user's online status when joining chat
     socket.on("targetUserStatus", ({ userId: statusUserId, status }) => {
       if (statusUserId === targetuserId) {
         setIsOnline(status === "online");
       }
     });
-
     // Handle real-time user status updates
     socket.on("userStatusUpdate", ({ userId: statusUserId, status }) => {
       if (statusUserId === targetuserId) {
         setIsOnline(status === "online");
       }
     });
-
     // Handle typing indicator
     socket.on("userTyping", ({ userId: typingUserId, isTyping }) => {
       if (typingUserId === targetuserId) {
         setOtherUserTyping(isTyping);
       }
     });
-
     return () => {
       socket.disconnect();
     };
@@ -183,7 +185,8 @@ const Chat = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto m-5 h-[85vh] flex flex-col bg-slate-900/95 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="w-full min-h-[85vh] flex justify-center items-center px-0 sm:px-2 md:px-4">
+      <div className="w-full max-w-2xl m-0 sm:m-5 h-[85vh] flex flex-col bg-slate-900/95 backdrop-blur-md border border-slate-700/50 rounded-none sm:rounded-2xl overflow-hidden shadow-2xl">
       {/* Chat Header */}
       <div className="bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-md border-b border-slate-600/50 p-4">
         <div className="flex items-center gap-4">
@@ -223,8 +226,8 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-900/50 to-slate-800/50">
+  {/* Messages Area */}
+  <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4 bg-gradient-to-b from-slate-900/50 to-slate-800/50">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-slate-400">
             <div className="text-6xl mb-4">💬</div>
@@ -235,9 +238,9 @@ const Chat = () => {
           messages.map((msg, index) => (
             <div
               key={index}
-              className={`flex ${msg.isOwn ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${msg.isOwn ? 'justify-end' : 'justify-start'} w-full`}
             >
-              <div className={`flex items-end gap-2 max-w-xs lg:max-w-md ${
+              <div className={`flex items-end gap-2 max-w-[95vw] sm:max-w-xs lg:max-w-md ${
                 msg.isOwn ? 'flex-row-reverse' : 'flex-row'
               }`}>
                 {!msg.isOwn && (
@@ -256,9 +259,9 @@ const Chat = () => {
                       msg.isOwn
                         ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-br-md'
                         : 'bg-slate-700/80 text-slate-100 rounded-bl-md border border-slate-600/50'
-                    }`}
+                    } max-w-full overflow-x-auto`}
                   >
-                    <div className="break-words">{msg.text}</div>
+                    <div className="break-words break-all whitespace-pre-line overflow-x-auto" style={{wordBreak:'break-word', maxWidth:'80vw'}}>{msg.text}</div>
                   </div>
                   <div className={`text-xs text-slate-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
                     msg.isOwn ? 'text-right' : 'text-left'
@@ -296,9 +299,9 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Message Input */}
-      <div className="bg-slate-800/90 backdrop-blur-md border-t border-slate-600/50 p-4">
-        <div className="flex items-end gap-3">
+  {/* Message Input */}
+  <div className="bg-slate-800/90 backdrop-blur-md border-t border-slate-600/50 p-2 sm:p-4 shrink-0">
+        <div className="flex items-end gap-2 sm:gap-3">
           <div className="flex-1 relative">
             <textarea
               value={newMessage}
@@ -364,6 +367,7 @@ const Chat = () => {
             <span className="text-lg">🚀</span>
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
