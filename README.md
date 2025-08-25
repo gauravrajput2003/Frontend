@@ -137,7 +137,7 @@ cd ~/DevTinder
 git pull origin main
 
 # Step 3: Install new packages (only if you added new ones)
-npm idepsnstall --legacy-peer-
+npm install --legacy-peer-
 
 # Step 4: Restart backend server with updated environment variables
 pm2 restart devtinder-backend --update-env

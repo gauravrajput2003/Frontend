@@ -99,19 +99,10 @@ const Chat = () => {
     fetchTargetUser();
   }, [targetuserId]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (newMessage.trim()) {
-      // Add message to local state immediately as "You"
-      const newMsg = {
-        firstName: "You",
-        text: newMessage,
-        isOwn: true,
-        timestamp: new Date().toISOString()
-      };
-      
-      setMessages((prevMessages) => [...prevMessages, newMsg]);
-
       const socket = createSocketConnection();
+      // Send message to backend
       socket.emit("sendMessage", {
         firstName: user.firstName,
         lastName: user.lastName,
@@ -120,6 +111,10 @@ const Chat = () => {
         text: newMessage,
       });
       setNewMessage("");
+      // Wait a moment for backend to save, then re-fetch chat history
+      setTimeout(() => {
+        fetchMessage();
+      }, 300);
     }
   };
 
