@@ -17,8 +17,6 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import ProtectedRoute from './components/ProtectedRoute';
 import Chat from './components/Chat';
 
-
-
 const App = () => {
   return (
     <Provider store={appStore}>
@@ -70,8 +68,23 @@ const App = () => {
                 />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
-                <Route path="chats" element={<ProtectedRoute><ChatList /></ProtectedRoute>} />
-                <Route path="chat/:targetuserId" element={<Chat/>} />
+                {/* Updated chat routes */}
+                <Route
+                  path="messages"
+                  element={
+                    <ProtectedRoute>
+                      <ChatList />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="chat/:targetuserId"
+                  element={
+                    <ProtectedRoute>
+                      <Chat />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="privacy" element={<PrivacyPolicy />} />
               </Route>
             </Routes>

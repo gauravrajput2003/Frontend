@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../utils/Constant";
 
-const ChatList = () => {
+const ChatList = ({ horizontal }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,6 +27,30 @@ const ChatList = () => {
   if (loading) return <div className="p-6 text-center text-slate-400">Loading chats...</div>;
   if (error) return <div className="p-6 text-center text-red-400">{error}</div>;
   if (!chats.length) return <div className="p-6 text-center text-slate-400">No chats yet.</div>;
+
+  if (horizontal) {
+    return (
+      <ul className="flex flex-row gap-4 overflow-x-auto px-2 py-2">
+        {chats.map((user) => (
+          <li key={user._id}>
+            <Link
+              to={`/chat/${user._id}`}
+              className="flex flex-col items-center group"
+            >
+              <img
+                src={user.photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                alt={user.firstName}
+                className="w-10 h-10 rounded-full object-cover border border-sky-400/30 group-hover:border-sky-400"
+              />
+              <span className="text-xs text-white group-hover:text-sky-300 mt-1 text-center">
+                {user.firstName}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <div className="p-4">

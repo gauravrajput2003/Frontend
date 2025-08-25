@@ -103,6 +103,7 @@ const Navbar = () => {
                   <span className="text-lg">📬</span>
                   <span>Requests</span>
                 </Link>
+                {/* Removed Chat link from navbar */}
                 <Link 
                   to="/about" 
                   className="text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-all duration-200 flex items-center gap-2"
@@ -344,6 +345,7 @@ const Navbar = () => {
                   <span className="text-lg">📬</span>
                   <span>Requests</span>
                 </Link>
+             
                 <Link 
                   to="/about" 
                   className="flex items-center gap-3 text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg p-3 transition-all duration-200"
